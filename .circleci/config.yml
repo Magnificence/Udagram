@@ -38,7 +38,7 @@ jobs:
           command: npm run api:build
       - run:
           name: Deploy Back-end Project to Elastic Beanstalk
-          command: npm run deploy
+          command: npm run api:deploy
 workflows:
   deploy:
     jobs:
