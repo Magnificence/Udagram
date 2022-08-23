@@ -7,6 +7,9 @@ orbs:
   # different jobs are calles later in the workflows sections
 jobs:
   frontend:
+    build:
+      docker:
+        - image: cimg/base:stable
     steps:
       - checkout
       - node/install
@@ -21,18 +24,21 @@ jobs:
         name: Deploy Front-end Project to S3
         command: npm run frontend:deploy
   backend:
-    steps:
-      - checkout
-      - node/install
-      - run:
-        name: Install Dependencies
-        command: npm run api:install
-      - run:
-        name: Build Back-end Project
-        command: npm run api:build
-      - run:
-        name: Deploy Back-end Project to Elastic Beanstalk
-        command: npm run deploy
+    build:
+      docker:
+        - image: cimg/base:stable
+      steps:
+        - checkout
+        - node/install
+        - run:
+          name: Install Dependencies
+          command: npm run api:install
+        - run:
+          name: Build Back-end Project
+          command: npm run api:build
+        - run:
+          name: Deploy Back-end Project to Elastic Beanstalk
+          command: npm run deploy
 workflows:
   deploy:
     jobs:
