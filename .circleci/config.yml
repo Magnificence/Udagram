@@ -1,0 +1,32 @@
+version: 2.1
+orbs:
+  # orgs contain basc recipes and reproducible actions (install node, aws, etc.)
+  node: circleci/node@5.0.2
+  eb: circleci/aws-elastic-beanstalk@2.0.1
+  aws-cli: circleci/aws-cli@3.1.1
+  # different jobs are calles later in the workflows sections
+jobs:
+  frontend:
+    steps:
+      - checkout
+      - node/install
+      - aws-cli/install
+      - run:
+        name: Install Dependencies
+        command: npm run frontend:install
+      - run:
+        name: Build Front-end Project
+        command: npm run frontend:build
+      - run:
+        name: Deploy Front-end Project to S3
+        command: npm run frontend:deploy
+  backend:
+    steps:
+    - checkout
+    - node/install
+    - run:
+      name: Install Dependencies
+      command: npm run api:install
+    - run:
+      name: Build Back-end Project
+      command: npm run api:build
