@@ -40,17 +40,15 @@ jobs:
 workflows:
   deploy:
     jobs:
-      - hold:
+      - frontend:
           filters:
             branches:
               only:
                 - main
-          type: approval
-      - frontend:
-          requires:
-            - hold
       - backend:
-          requires:
-            - hold
+          filters:
+            branches:
+              only:
+                - main
 
       
