@@ -44,3 +44,7 @@ workflows:
     jobs:
       - frontend
       - backend
+      filters:
+            branches:
+              only:
+                - main
